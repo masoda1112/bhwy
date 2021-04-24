@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import FriendsList from './components/friendsList';
+import Login from './components/login';
+import GameList from './components/gameList';
+import SignUp from './components/signup'
+import PrivateRoute from './firebase/privateRoute'
+import { AuthProvider } from './firebase/authProvider';
 
-function App() {
+const App =()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Switch>
+          <PrivateRoute exact path='/friendsList' component={FriendsList} />
+          <Route exact path='/' component={Login} />
+          <Route exact path='/gameList' component={GameList} />
+          <Route exact path='/signup' component={SignUp} />
+        </Switch>
+        <Link to='/'>Back To Top</Link>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
